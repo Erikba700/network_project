@@ -1,6 +1,8 @@
 # IP Messenger Receiver
 
-This project is a basic IP-based messaging receiver that listens for incoming messages, displays them, and logs them to a file. The project works over TCP/IP, receiving messages encoded in XML format. The system logs every received message with a timestamp and prints the details to the terminal.
+This project is a basic IP-based messaging receiver that listens for incoming messages, displays them, and logs them to a file. It works over TCP/IP and receives messages encoded in XML format. Every received message is logged with a timestamp and printed to the terminal.
+
+---
 
 ## Features
 
@@ -9,35 +11,18 @@ This project is a basic IP-based messaging receiver that listens for incoming me
 - Logs received messages with timestamps to a log file.
 - Handles connections from multiple clients using threading.
 
+---
+
 ## Requirements
 
 - Python 3.x
-- Required Python libraries:
+- No third-party libraries required (uses built-in libraries):
   - `socket`
   - `threading`
   - `datetime`
+  - `xml.etree.ElementTree`
 
-### Optional (for logging and message formatting):
-- `colorama` (for colored terminal output; removed in this version)
-
-## Installation
-
-1. Clone or download the repository to your server or machine.
-
-2. Install necessary Python packages (if not already installed):
-   - You can install Python using the following commands (if you don't have it already):
-   
-     ```bash
-     sudo apt update
-     sudo apt install python3
-     sudo apt install python3-pip
-     ```
-   
-   - Install any missing dependencies:
-
-     ```bash
-     pip3 install --user socket
-     ```
+---
 
 ## Usage
 
@@ -48,37 +33,40 @@ This project is a basic IP-based messaging receiver that listens for incoming me
 
    ```bash
    python3 receive_messages.py
-This will start the server listening for incoming messages on port 5050.Message Format
-The receiver expects messages to be in the following format:
+This will start the server and begin listening for incoming messages on port 5050.
+
+Sending a Message
+To test the receiver:
+
+Open a new terminal window.
+
+From the same project directory, run the send_message.py script:
+
+bash
+python3 send_message.py
+You’ll be prompted to enter the receiver's IP address and your message. The message will be sent in XML format to the server.
+
+Message Format
+The receiver expects messages in the following XML format:
 
 xml
-Copy
-Edit
 <message to="recipient_ip" from="sender_ip" type="chat" xmlns="jabber:client">
   <body>Message content goes here</body>
 </message>
 Example Output
-Upon receiving a message, the receiver will display the message details in the terminal:
+When a message is received, the server terminal will display:
 
 vbnet
-Copy
-Edit
 --- New Message ---
 From: sender_ip
 To:   recipient_ip
 Body: Message content goes here
 --- End of Message ---
-It will also log the message to received_messages.log with a timestamp.
-
 Example Log Format
-The log will store the messages with a timestamp in the following format:
+In received_messages.log, each message is stored with a timestamp:
 
 php-template
-Copy
-Edit
 [YYYY-MM-DD HH:MM:SS]
 <message to="recipient_ip" from="sender_ip" type="chat" xmlns="jabber:client">
   <body>Message content goes here</body>
 </message>
-
-
